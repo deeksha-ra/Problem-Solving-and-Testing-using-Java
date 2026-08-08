@@ -1,0 +1,32 @@
+import java.util.Arrays;
+import java.util.Scanner;
+class Solution {
+    public static int[] sortedSquares(int[] nums) {
+        int l=0;
+        int r=nums.length-1;
+        int[] result=new int[nums.length];
+        int index=nums.length-1;
+        while(l<=r){
+            int lsq=nums[l]*nums[l];
+            int rsq=nums[r]*nums[r];
+            if(lsq>rsq){
+                result[index]=lsq;
+                l++;
+            }
+            else{
+                result[index]=rsq;
+                r--;
+            }
+            index--;
+        }
+        return result;
+    }
+    public static void main(String[] args){
+        Scanner sc= new Scanner(System.in);
+        int[] nums= new int[5];
+        for(int i=0;i<5;i++){
+            nums[i]=sc.nextInt();
+        }
+        System.out.println(Arrays.toString(sortedSquares(nums)));
+    }
+}
