@@ -8,7 +8,6 @@ public class Task2{
         for (int i = 0; i < n; i++) {
             String sensor = sc.next();
             double temp = sc.nextDouble();
-
             if (temp > 50) {
                 map.computeIfAbsent(sensor, k -> new ArrayList<>()).add(temp);
             }
