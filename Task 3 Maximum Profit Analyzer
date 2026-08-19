@@ -1,0 +1,26 @@
+import java.util.*;
+import java.util.stream.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        int[] result = IntStream.range(0, n)
+                .map(i -> sc.nextInt())
+                .collect(
+                    () -> new int[]{0, Integer.MIN_VALUE},
+                    (a, x) -> {
+                        a[0] = Math.max(x, a[0] + x);
+                        a[1] = Math.max(a[1], a[0]);
+                    },
+                    (a, b) -> {
+                        a[0] = Math.max(a[0], b[0]);
+                        a[1] = Math.max(a[1], b[1]);
+                    }
+                );
+
+        System.out.println(result[1]);
+    }
+}
