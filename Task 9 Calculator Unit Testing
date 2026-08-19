@@ -1,0 +1,52 @@
+import java.util.*;
+
+class Calculator {
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public double divide(int a, int b) {
+        if (b == 0)
+            throw new ArithmeticException("Cannot divide by zero");
+
+        return (double) a / b;
+    }
+}
+
+public class Main {
+
+    static boolean testAddition(Calculator calc) {
+        return calc.add(10, 20) == 30;
+    }
+
+    static boolean testDivision(Calculator calc) {
+        return calc.divide(20, 5) == 4.0;
+    }
+
+    static boolean testDivisionByZero(Calculator calc) {
+        try {
+            calc.divide(10, 0);
+            return false;
+        } catch (ArithmeticException e) {
+            return true;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        String expression = sc.nextLine();
+
+        Calculator calc = new Calculator();
+
+        boolean additionTest = testAddition(calc);
+        boolean divisionTest = testDivision(calc);
+        boolean exceptionTest = testDivisionByZero(calc);
+
+        if (additionTest && divisionTest && exceptionTest)
+            System.out.println("Test Passed");
+        else
+            System.out.println("Test Failed");
+    }
+}
