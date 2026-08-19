@@ -1,0 +1,123 @@
+import java.util.*;
+import java.util.stream.*;
+
+abstract class Vehicle {
+    protected double rate;
+
+    Vehicle(double rate) {
+        this.rate = rate;
+    }
+
+    abstract double calculateFare(double distance);
+}
+
+class Bike extends Vehicle {
+    Bike() {
+        super(5);
+    }
+
+    double calculateFare(double distance) {
+        return distance * rate;
+    }
+}
+
+class Auto extends Vehicle {
+    Auto() {
+        super(12);
+    }
+
+    double calculateFare(double distance) {
+        return distance * rate;
+    }
+}
+
+class Cab extends Vehicle {
+    Cab() {
+        super(12);
+    }
+
+    double calculateFare(double distance) {
+        return distance * rate;
+    }
+}
+
+class Rider {
+    private String name;
+
+    Rider(String name) {
+        this.name = name;
+    }
+}
+
+class Driver {
+    private String name;
+
+    Driver(String name) {
+        this.name = name;
+    }
+}
+
+class Trip {
+    private Vehicle vehicle;
+    private double distance;
+
+    Trip(Vehicle vehicle, double distance) {
+        if (distance <= 0)
+            throw new IllegalArgumentException("Invalid distance");
+
+        this.vehicle = vehicle;
+        this.distance = distance;
+    }
+
+    double getFare() {
+        return vehicle.calculateFare(distance);
+    }
+}
+
+public class Main {
+
+    static Trip createTrip(String type, double distance) {
+        Vehicle vehicle;
+
+        switch (type) {
+            case "Bike":
+                vehicle = new Bike();
+                break;
+
+            case "Auto":
+                vehicle = new Auto();
+                break;
+
+            case "Cab":
+                vehicle = new Cab();
+                break;
+
+            default:
+                throw new IllegalArgumentException("Invalid ride type");
+        }
+
+        return new Trip(vehicle, distance);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = Integer.parseInt(sc.nextLine());
+
+        IntStream.range(0, n)
+                .mapToObj(i -> sc.nextLine().split(" "))
+                .forEach(data -> {
+                    try {
+                        String type = data[0];
+                        double distance = Double.parseDouble(data[1]);
+
+                        Trip trip = createTrip(type, distance);
+
+                        System.out.println((int) trip.getFare());
+
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid Booking");
+                    }
+                });
+    }
+}
