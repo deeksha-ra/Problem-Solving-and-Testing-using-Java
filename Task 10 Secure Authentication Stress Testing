@@ -1,0 +1,49 @@
+import java.util.*;
+import java.util.stream.*;
+
+class LoginSystem {
+
+    private final Map<String, String> users = Map.of(
+            "admin", "admin123",
+            "student", "student123",
+            "testuser", "password"
+    );
+
+    public boolean login(String username, String password) {
+        if (username == null || password == null)
+            throw new IllegalArgumentException("Null input");
+
+        if (username.length() < 3 || username.length() > 20)
+            return false;
+
+        if (password.length() < 6 || password.length() > 20)
+            return false;
+
+        return users.containsKey(username)
+                && users.get(username).equals(password);
+    }
+}
+
+public class Main {
+
+    static boolean validate(LoginSystem system, String username, String password) {
+        try {
+            return system.login(username, password);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = Integer.parseInt(sc.nextLine());
+        LoginSystem system = new LoginSystem();
+
+        IntStream.range(0, n)
+                .mapToObj(i -> sc.nextLine().split(" ", 2))
+                .map(data -> validate(system, data[0], data[1]))
+                .map(result -> result ? "SUCCESS" : "FAILURE")
+                .forEach(System.out::println);
+    }
+}
