@@ -1,0 +1,65 @@
+import java.util.*;
+import java.util.stream.*;
+
+class Codechef {
+
+    static boolean isLapindrome(String s) {
+        int n = s.length();
+        int mid = n / 2;
+
+        String left = s.substring(0, mid);
+
+        String right;
+        if (n % 2 == 0) {
+            right = s.substring(mid);
+        } else {
+            right = s.substring(mid + 1);
+        }
+
+        Map<Character, Long> leftFreq = left.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(
+                        c -> c,
+                        Collectors.counting()
+                ));
+
+        Map<Character, Long> rightFreq = right.chars()
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(
+                        c -> c,
+                        Collectors.counting()
+                ));
+
+        return leftFreq.equals(rightFreq);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int T = sc.nextInt();
+
+        IntStream.range(0, T)
+                .mapToObj(i -> sc.next())
+                .map(Codechef::isLapindrome)
+                .map(result -> result ? "YES" : "NO")
+                .forEach(System.out::println);
+
+        sc.close();
+    }
+}
+
+Sample Input
+6
+gaga
+abcde
+rotor
+xyzxy
+abbaab
+ababc
+Your Output
+YES
+NO
+YES
+YES
+NO
+NO
