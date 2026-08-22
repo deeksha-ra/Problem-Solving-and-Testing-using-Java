@@ -18,3 +18,10 @@ class Solution {
         System.out.println("["+sortArrayByParity(nums)+"]");
     }
 }
+
+Input
+nums = [3,1,2,4]
+Output
+[2,4,3,1]
+Expected Output
+[2,4,3,1]
