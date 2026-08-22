@@ -1,0 +1,14 @@
+class Solution {
+    public boolean halvesAreAlike(String s) {
+        int mid=s.length()/2;
+        long first=s.substring(0,mid)
+                    .chars()
+                    .filter(c->"aeiouAEIOU".indexOf(c)!=-1)
+                    .count();
+        long last = s.substring(mid)
+                    .chars()
+                    .filter(c->"aeiouAEIOU".indexOf(c)!=-1)
+                    .count();
+        return first==last;
+    }
+}
