@@ -12,3 +12,11 @@ class Solution {
         return first==last;
     }
 }
+
+
+Input
+s = "book"
+Output
+true
+Expected Output
+true
