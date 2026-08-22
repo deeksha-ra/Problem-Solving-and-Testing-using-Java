@@ -11,3 +11,10 @@ class Solution {
         );
     }
 }
+
+Input
+strs = ["eat","tea","tan","ate","nat","bat"]
+Output
+[["eat","tea","ate"],["bat"],["tan","nat"]]
+Expected Output
+[["bat"],["nat","tan"],["ate","eat","tea"]]
