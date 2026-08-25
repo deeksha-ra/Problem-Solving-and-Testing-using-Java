@@ -1,0 +1,96 @@
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.joining;
+
+class Result {
+
+    public static List<Integer> maxSubarray(List<Integer> arr) {
+
+        // Maximum subarray sum
+        int current = arr.get(0);
+        int maxSubarray = arr.get(0);
+
+        for (int i = 1; i < arr.size(); i++) {
+            current = Math.max(arr.get(i), current + arr.get(i));
+            maxSubarray = Math.max(maxSubarray, current);
+        }
+
+        // Maximum subsequence sum
+        int maxSubsequence = 0;
+        int largestNegative = arr.get(0);
+        boolean hasPositive = false;
+
+        for (int num : arr) {
+            if (num > 0) {
+                maxSubsequence += num;
+                hasPositive = true;
+            }
+
+            largestNegative = Math.max(largestNegative, num);
+        }
+
+        if (!hasPositive) {
+            maxSubsequence = largestNegative;
+        }
+
+        return Arrays.asList(maxSubarray, maxSubsequence);
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader bufferedReader =
+                new BufferedReader(new InputStreamReader(System.in));
+
+        BufferedWriter bufferedWriter =
+                new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int t = Integer.parseInt(bufferedReader.readLine().trim());
+
+        IntStream.range(0, t).forEach(tItr -> {
+            try {
+                int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+                List<Integer> arr = Stream.of(
+                        bufferedReader.readLine()
+                                .replaceAll("\\s+$", "")
+                                .split(" ")
+                )
+                .map(Integer::parseInt)
+                .collect(toList());
+
+                List<Integer> result = Result.maxSubarray(arr);
+
+                bufferedWriter.write(
+                        result.stream()
+                                .map(Object::toString)
+                                .collect(joining(" "))
+                        + "\n"
+                );
+
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
+
+Input (stdin)
+2
+4
+1 2 3 4
+6
+2 -1 2 3 4 -5
+Your Output (stdout)
+10 10
+10 11
+Expected Output
+10 10
+10 11
