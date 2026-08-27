@@ -1,0 +1,28 @@
+import java.util.*;
+
+public class GFG {
+    static ArrayList<Integer> search(String pattern, String text) {
+        ArrayList<Integer> result = new ArrayList<>();
+        int n = text.length();
+        int m = pattern.length();
+        for (int i = 0; i <= n - m; i++) {
+            int j = 0;
+            while (j < m && text.charAt(i + j) == pattern.charAt(j)) {
+                j++;
+            }
+            if (j == m) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+    public static void main(String[] args) {
+        String text = "geeksforgeeks";
+        String pattern = "geeks";
+        ArrayList<Integer> result = search(pattern, text);
+        System.out.println(result);
+    }
+}
+
+Output 
+[0, 8]
