@@ -1,0 +1,110 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+class Result {
+
+    /*
+     * Complete the 'circularPalindromes' function below.
+     *
+     * The function is expected to return an INTEGER_ARRAY.
+     * The function accepts STRING s as parameter.
+     */
+
+    public static List<Integer> circularPalindromes(String s) {
+        int n = s.length();
+        String doubled = s + s;
+        List<Integer> result = new ArrayList<>();
+        for (int start = 0; start < n; start++) {
+            int maxLength = 1;
+            for (int center = start; center < start + n; center++) {
+                int left = center;
+                int right = center;
+                while (left >= start &&
+                       right < start + n &&
+                       doubled.charAt(left) == doubled.charAt(right)) {
+                    maxLength = Math.max(maxLength, right - left + 1);
+                    left--;
+                    right++;
+                }
+            }
+            for (int center = start; center < start + n - 1; center++) {
+                int left = center;
+                int right = center + 1;
+                while (left >= start &&
+                       right < start + n &&
+                       doubled.charAt(left) == doubled.charAt(right)) {
+                    maxLength = Math.max(maxLength, right - left + 1);
+                    left--;
+                    right++;
+                }
+            }
+            result.add(maxLength);
+        }
+        return result;
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+        String s = bufferedReader.readLine();
+
+        List<Integer> result = Result.circularPalindromes(s);
+
+        bufferedWriter.write(
+            result.stream()
+                .map(Object::toString)
+                .collect(joining("\n"))
+            + "\n"
+        );
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
+
+Input (stdin)
+13
+aaaaabbbbaaaa
+Your Output (stdout)
+12
+12
+10
+8
+8
+9
+11
+13
+11
+9
+8
+8
+10
+Expected Output
+12
+12
+10
+8
+8
+9
+11
+13
+11
+9
+8
+8
+10
