@@ -1,0 +1,24 @@
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Long> freq = Arrays.stream(nums)
+                .boxed()
+                .collect(Collectors.groupingBy(
+                        x -> x,
+                        Collectors.counting()
+                ));
+        return freq.entrySet()
+                .stream()
+                .sorted((a, b) -> Long.compare(b.getValue(), a.getValue()))
+                .limit(k)
+                .mapToInt(Map.Entry::getKey)
+                .toArray();
+    }
+}
+
+Input
+nums = [1,1,1,2,2,3]
+k = 2
+Output
+[1,2]
+Expected Output
+[1,2]
