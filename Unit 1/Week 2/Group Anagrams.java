@@ -1,0 +1,20 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        return new ArrayList<>(
+                Arrays.stream(strs)
+                      .collect(Collectors.groupingBy(s -> {
+                          char[] ch = s.toCharArray();
+                          Arrays.sort(ch);
+                          return new String(ch);
+                      }))
+                      .values()
+        );
+    }
+}
+Input
+strs =
+["eat","tea","tan","ate","nat","bat"]
+Output
+[["eat","tea","ate"],["bat"],["tan","nat"]]
+Expected
+[["bat"],["nat","tan"],["ate","eat","tea"]]
