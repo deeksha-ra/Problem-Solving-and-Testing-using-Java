@@ -14,3 +14,39 @@ Constraints:
  The input is generated such that a majority element will exist in the array.
 
   
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int[] nums = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        int candidate = 0, count = 0;
+
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
+            }
+
+            if (num == candidate) {
+                count++;
+            } else {
+                count--;
+            }
+        }
+
+        System.out.println(candidate);
+        sc.close();
+    }
+}
+Input
+3
+3 2 3
+Output
+3
